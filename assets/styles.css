@@ -1,0 +1,15 @@
+html, body {
+    height: 100%;
+}
+
+.nav-link {
+    text-decoration: none;
+}
+
+.header {
+    padding: 2em 0;
+}
+
+.nav {
+    padding: 2em;
+}

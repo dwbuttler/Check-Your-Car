@@ -2,7 +2,7 @@
 
 class DatabaseHelper
 {
-    private const HOST = 'sql12.freemysqlhosting.net';
+    private const DSN = 'mysql:dbname=sql12363087;host=sql12.freemysqlhosting.net';
     private const USER = 'sql12363087';
     private const PASSWORD = 'y9fDDGWheS';
 
@@ -10,7 +10,7 @@ class DatabaseHelper
 
     public function __construct()
     {
-        $this->databasePDO = new PDO(self::HOST, self::USER, self::PASSWORD);
+        $this->databasePDO = new PDO(self::DSN, self::USER, self::PASSWORD);
     }
 
     public function insert(string $sql): int
@@ -30,6 +30,6 @@ class DatabaseHelper
 
     public function select(string $sql): PDOStatement
     {
-        return $this->databasePDO->query($sql);
+        return $this->databasePDO->query($sql, PDO::FETCH_NUM);
     }
 }

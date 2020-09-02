@@ -1,5 +1,7 @@
 <?php
 
+require_once '../database/DatabaseHelper.php';
+
 class User
 {
     protected $dbh;
@@ -21,9 +23,9 @@ class User
             $hashedPassword = password_hash($sanitisedPassword, PASSWORD_DEFAULT);
 
             // User can't register if they have an account obviously.
-            if (!$this->checkUserExists($sanitisedEmail)) {
+            if (empty($this->checkUserExists($sanitisedEmail))) {
                 try {
-                    return $this->dbh->insert("INSERT INTO user VALUES ({$sanitisedEmail}, {$hashedPassword})");
+                    return $this->dbh->insert("INSERT INTO user (email, password, created_at) VALUES ('{$sanitisedEmail}', '{$hashedPassword}', NOW())");
                 } catch (PDOException $e) {
                     return false;
                 }
@@ -35,7 +37,7 @@ class User
 
     protected function checkUserExists(string $email): PDOStatement
     {
-        return $this->dbh->select("SELECT id FROM user WHERE email = {$email}");
+        return $this->dbh->select("SELECT id FROM user WHERE email = '{$email}'");
     }
 
     public function loginUser(string $email, string $password): bool
