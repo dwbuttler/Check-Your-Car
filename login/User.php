@@ -23,7 +23,7 @@ class User
             $hashedPassword = password_hash($sanitisedPassword, PASSWORD_DEFAULT);
 
             // User can't register if they have an account obviously.
-            if (empty($this->checkUserExists($sanitisedEmail))) {
+            if ($this->checkUserExists($sanitisedEmail) === 0) {
                 try {
                     return $this->dbh->insert("INSERT INTO user (email, password, created_at) VALUES ('{$sanitisedEmail}', '{$hashedPassword}', NOW())");
                 } catch (PDOException $e) {
@@ -35,9 +35,9 @@ class User
         }
     }
 
-    protected function checkUserExists(string $email): PDOStatement
+    protected function checkUserExists(string $email): int
     {
-        return $this->dbh->select("SELECT id FROM user WHERE email = '{$email}'");
+        return $this->dbh->select("SELECT id FROM user WHERE email = '{$email}'")->rowCount();
     }
 
     public function loginUser(string $email, string $password): bool

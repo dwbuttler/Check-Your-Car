@@ -30,6 +30,6 @@ class DatabaseHelper
 
     public function select(string $sql): PDOStatement
     {
-        return $this->databasePDO->query($sql, PDO::FETCH_NUM);
+        return $this->databasePDO->query($sql);
     }
 }
