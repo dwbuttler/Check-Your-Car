@@ -2,9 +2,6 @@
 
 @extends('layouts.header')
 
-<div class='container text-center header'>
-    <a href='../index.php' class='nav-link'><h2>Check Your Car</h2></a>
-</div>
 <div class='container'>
     <form method='post' action='<?=URL::route('user.create');?>'>
         @csrf
