@@ -1,15 +1,18 @@
+<?php use Illuminate\Support\Facades\URL; ?>
+
 @extends('layouts.header')
 
 <div class='container text-center header'>
     <a href='../index.php' class='nav-link'><h2>Check Your Car</h2></a>
 </div>
 <div class='container'>
-    <form method='post' action='process_registration.php'>
+    <form method='post' action='<?=URL::route('user.create');?>'>
+        @csrf
         <div class='row justify-content-center'>
             <div class='col-4'>
                 <div class='form-group'>
                     <label for='email'>Email address</label>
-                    <input type='email' class='form-control' name='email' id='email' aria-describedby='emailHelp'>
+                    <input type='email' class='form-control' name='email' id='email'>
                 </div>
             </div>
         </div>

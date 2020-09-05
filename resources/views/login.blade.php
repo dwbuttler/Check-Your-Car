@@ -1,3 +1,5 @@
+<?php use Illuminate\Support\Facades\URL; ?>
+
 @extends('layouts.header')
 
 <div class='container h-100'>
@@ -5,7 +7,8 @@
         <h2 class='text-primary'>Check Your Car</h2>
     </div>
     <div class='container'>
-        <form method='post' action=''>
+        <form method='post' action='<?=URL::route('login')?>'>
+            @csrf
             <div class='row justify-content-center'>
                 <div class='col-4'>
                     <div class='form-group'>
@@ -24,7 +27,7 @@
             </div>
             <div class='container text-center'>
                 <button type='submit' class='btn btn-primary'>Submit</button>
-                <a href='register/register.php' class='btn btn-secondary'>Register</a>
+                <a href='<?=URL::route('user.register')?>' class='btn btn-secondary'>Register</a>
             </div>
         </form>
     </div>

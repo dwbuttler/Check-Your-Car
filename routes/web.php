@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 // Login
 Route::get('/', function () { return view('login'); });
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('login', [LoginController::class, 'login'])->name('login');
 
 // Register
-Route::get('/user/register', function() { return view('register'); });
-Route::post('/user/create', [RegisterController::class, 'register']);
+Route::get('user/register', function() { return view('register'); })->name('user.register');
+Route::post('user/create', [RegisterController::class, 'register'])->name('user.create');
