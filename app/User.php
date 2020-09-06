@@ -40,12 +40,6 @@ class User extends Authenticatable
 
     public function getOne(string $email): ?User
     {
-        $user = self::where('email', $email)->first();
-
-        if ($user) {
-            return $user->get();
-        } else {
-            return null;
-        }
+        return self::where('email', $email)->first();
     }
 }
