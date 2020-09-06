@@ -10,7 +10,6 @@ class RegisterController extends Controller
 {
     public function register(Request $request): View
     {
-        $success = false;
         $user = new User();
         $email = $request->input('email');
         $password = $request->input('password');
@@ -23,11 +22,12 @@ class RegisterController extends Controller
 
             // User can't register if they have an account obviously.
             if (empty($user->getOne($sanitisedEmail))) {
-                $name = $request->input('name');
+                $name = $request->input('firstName') . ' ' . $request->input('lastName');
 
                 $user->name = $name;
                 $user->email = $sanitisedEmail;
                 $user->password = $hashedPassword;
+                $user->created_at = now();
                 $user->save();
 
                 return view('register-success', ['name' => $name]);

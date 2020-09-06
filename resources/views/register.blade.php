@@ -8,6 +8,22 @@
         <div class='row justify-content-center'>
             <div class='col-4'>
                 <div class='form-group'>
+                    <label for='firstName'>Firstname</label>
+                    <input type='text' class='form-control' name='firstName' id='firstName'>
+                </div>
+            </div>
+        </div>
+        <div class='row justify-content-center'>
+            <div class='col-4'>
+                <div class='form-group'>
+                    <label for='lastName'>Lastname</label>
+                    <input type='text' class='form-control' name='lastName' id='lastName'>
+                </div>
+            </div>
+        </div>
+        <div class='row justify-content-center'>
+            <div class='col-4'>
+                <div class='form-group'>
                     <label for='email'>Email address</label>
                     <input type='email' class='form-control' name='email' id='email'>
                 </div>
