@@ -4,32 +4,32 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Support\MessageBag;
 
 class LoginController extends Controller
 {
-    public function login(Request $request): View
+    public function login(Request $request, MessageBag $bag)
     {
-        $authenticated = false;
-        $user = new User();
-        $email = $request->input('email');
-        $password = $request->input('password');
+        $validatedData = $request->validate([
+           'email'      => 'required',
+           'password'   => 'required'
+        ]);
 
-        // Basic validation.
-        if ($email && $password) {
-            $identifiedUser = $user->getOne($email);
+        $user           = new User();
+        $identifiedUser = $user->getOne($validatedData['email']);
 
-            if ($identifiedUser) {
-                if (password_verify($password, $identifiedUser->password)) {
-                    $authenticated = true;
-                }
-            }
-
-            if ($authenticated) {
+        if ($identifiedUser) {
+            if (password_verify($validatedData['password'], $identifiedUser->password)) {
                 return view('home', ['name' => $identifiedUser->name]);
             } else {
-                return view('login', ['error' => 'Username or password supplied is incorrect']);
+                $bag->add('passwordNoMatch', 'The password provided is incorrect');
+
+                return redirect('/')->withErrors($bag);
             }
+        } else {
+            $bag->add('userNotFound', 'The email provided is not registered');
+
+            return redirect('/')->withErrors($bag);
         }
     }
 }
