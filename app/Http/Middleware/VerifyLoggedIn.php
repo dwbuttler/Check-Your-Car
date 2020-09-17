@@ -17,7 +17,7 @@ class VerifyLoggedIn
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
+        if (!Auth::user()) {
             return $next($request);
         } else {
             return redirect('/');

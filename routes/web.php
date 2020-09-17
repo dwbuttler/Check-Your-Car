@@ -26,11 +26,11 @@ Route::post('login', [LoginController::class, 'authenticate'])->name('login');
 Route::get('user/register', function() { return view('register'); })->name('user.register');
 Route::post('user/create', [RegisterController::class, 'register'])->name('user.create');
 
-//Route::middleware([VerifyLoggedIn::class])->group(function () {
+Route::middleware([VerifyLoggedIn::class])->group(function () {
     // Home
     Route::get('home/{user}', function (User $user) { return view('home', ['user' => $user]); })->name('user.home');
 
     // Vehicle
     Route::get('vehicle/register', function () { return view('vehicle-register'); })->name('vehicle.register');
     Route::post('vehicle/create', [VehicleController::class, 'register'])->name('vehicle.create');
-//});
+});
