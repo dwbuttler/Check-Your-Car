@@ -22,11 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () { return view('login'); });
 Route::post('login', [LoginController::class, 'authenticate'])->name('login');
 
-Route::middleware([VerifyLoggedIn::class])->group(function () {
-    // Register
-    Route::get('user/register', function() { return view('register'); })->name('user.register');
-    Route::post('user/create', [RegisterController::class, 'register'])->name('user.create');
+// Register
+Route::get('user/register', function() { return view('register'); })->name('user.register');
+Route::post('user/create', [RegisterController::class, 'register'])->name('user.create');
 
+Route::middleware([VerifyLoggedIn::class])->group(function () {
     // Home
     Route::get('home/{user}', function (User $user) { return view('home', ['user' => $user]); })->name('user.home');
 
