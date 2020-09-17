@@ -40,6 +40,6 @@
     @endforelse
 
     <div class="container">
-        <a href="/vehicle/register" class="btn btn-primary">Register a new vehicle</a>
+        <a href="<?=URL::route('vehicle.register')?>" class="btn btn-primary">Register a new vehicle</a>
     </div>
 @endsection
