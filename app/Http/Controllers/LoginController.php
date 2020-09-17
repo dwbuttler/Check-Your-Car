@@ -24,12 +24,12 @@ class LoginController extends Controller
             } else {
                 $bag->add('passwordNoMatch', 'The password provided is incorrect');
 
-                return redirect('/')->withErrors($bag);
+                return view('login')->withErrors($bag);
             }
         } else {
             $bag->add('userNotFound', 'The email provided is not registered');
 
-            return redirect('/')->withErrors($bag);
+            return view('login')->withErrors($bag);
         }
     }
 }
