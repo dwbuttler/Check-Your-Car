@@ -48,6 +48,15 @@
                 </div>
             </div>
         </div>
+        @if ($errors->any())
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    @foreach ($errors->all() as $message)
+                        <div class="alert alert-danger my-2" role="alert">{{ $message }}</div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
         <div class='container text-center'>
             <button type='submit' class='btn btn-primary'>Register</button>
             <a href="/" class="btn btn-secondary">Back to Login</a>

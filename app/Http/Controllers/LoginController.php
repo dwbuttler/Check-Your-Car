@@ -20,16 +20,16 @@ class LoginController extends Controller
 
         if ($identifiedUser) {
             if (password_verify($validatedData['password'], $identifiedUser->password)) {
-                return view('home', ['name' => $identifiedUser->name]);
+                return redirect()->route('user.home', [$identifiedUser]);
             } else {
                 $bag->add('passwordNoMatch', 'The password provided is incorrect');
 
-                return view('login')->withErrors($bag);
+                return back()->withErrors($bag);
             }
         } else {
             $bag->add('userNotFound', 'The email provided is not registered');
 
-            return view('login')->withErrors($bag);
+            return back()->withErrors($bag);
         }
     }
 }

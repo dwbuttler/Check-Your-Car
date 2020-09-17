@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
-    public function register(Request $request): View
+    public function register(Request $request, MessageBag $bag)
     {
         $user = new User();
         $email = $request->input('email');
@@ -30,9 +31,11 @@ class RegisterController extends Controller
                 $user->created_at = now();
                 $user->save();
 
-                return view('register-success', ['name' => $name]);
+                return redirect()->route('user.home', [$user]);
             } else {
-                return view('register', ['error' => 'An account with email provided already exists']);
+                $bag->add('emailExists', 'An account with email provided already exists');
+
+                return back()->withErrors($bag);
             }
         }
     }
