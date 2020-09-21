@@ -32,7 +32,7 @@
             <td>{{ $vehicle->year }}</td>
             <td>{{ $vehicle->type }}</td>
             <td>
-                <a href='vehicle/edit/{{ $vehicle->id }}' class='btn btn-secondary'>Edit</a>
+                <a href='/vehicle/edit/{{ $vehicle->id }}' class='btn btn-secondary'>Edit</a>
                 <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteVehicleModal' data-vehicle='{{ $vehicle->id }}' data-vehicle-name='{{ $vehicle->make }} {{ $vehicle->model }}'>Delete</button>
             </td>
         </tr>

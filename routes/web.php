@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\Authenticate;
 use App\User;
+use App\Vehicle;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +33,7 @@ Route::middleware([Authenticate::class])->group(function () {
     // Vehicle
     Route::get('vehicle/register', function () { return view('vehicle-register'); })->name('vehicle.register');
     Route::post('vehicle/create', [VehicleController::class, 'register'])->name('vehicle.create');
-    Route::get('vehicle/edit/{id}', [VehicleController::class, 'edit']);
-    Route::put('vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehicle.edit');
+    Route::get('vehicle/edit/{id}', function ($id) { return view('vehicle-edit', ['vehicle' => Vehicle::find($id)]); });
+    Route::put('vehicle/edit', [VehicleController::class, 'edit'])->name('vehicle.edit');
     Route::delete('vehicle/delete/{id}', [VehicleController::class, 'delete']);
 });

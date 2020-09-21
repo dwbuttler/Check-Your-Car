@@ -25,7 +25,26 @@ class VehicleController extends Controller
 
         $vehicle->save();
 
-        return redirect()->route('user.home', [auth()->user()]);
+        return redirect()->route('user.home', [auth()->id()]);
+    }
+
+    public function edit(Request $request) {
+        $validatedData = $request->validate([
+            'make'      => 'required',
+            'model'     => 'required',
+            'year'      => 'required',
+            'type'      => 'required'
+        ]);
+
+        $vehicle            = Vehicle::find($request->input('vehicleID'));
+        $vehicle->make      = $validatedData['make'];
+        $vehicle->model     = $validatedData['model'];
+        $vehicle->year      = $validatedData['year'];
+        $vehicle->type      = $validatedData['type'];
+
+        $vehicle->save();
+
+        return redirect()->route('user.home', [auth()->id()]);
     }
 
     public function delete(Request $request, $id) {

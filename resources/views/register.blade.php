@@ -59,7 +59,7 @@
         @endif
         <div class='container text-center'>
             <button type='submit' class='btn btn-primary'>Register</button>
-            <a href="/" class="btn btn-secondary">Back to Login</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Back to Login</a>
         </div>
     </form>
 </div>

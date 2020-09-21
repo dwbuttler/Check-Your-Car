@@ -57,7 +57,7 @@
             @endif
             <div class='container text-center'>
                 <button type='submit' class='btn btn-primary'>Register Vehicle</button>
-                <a href="/home" class="btn btn-secondary">Back to Home</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
