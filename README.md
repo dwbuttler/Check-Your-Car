@@ -13,4 +13,8 @@ Project A for Professional Practice in Information Technology @ Deakin Universit
 
 Hosted on Heroku: https://check-your-car.herokuapp.com/
 
-Database is MySQL and is administered using phpMyAdmin
+Database is MySQL
+
+## Running a local instance of the website for development
+
+Clone the repo and then navigate to root and run the artisan command: "php artisan serve"
