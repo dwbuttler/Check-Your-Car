@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Defect;
+use App\Http\Controllers\DefectNotificationAction;
 use Illuminate\Console\Command;
 
 class CreateDefectEvent extends Command
@@ -48,6 +49,8 @@ class CreateDefectEvent extends Command
         $defect->year           = $this->argument('year');
 
         $defect->save();
+
+        (new DefectNotificationAction())->execute();
 
         return 1;
     }
