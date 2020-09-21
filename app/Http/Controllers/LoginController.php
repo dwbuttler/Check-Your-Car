@@ -14,7 +14,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('user.home', [auth()->user()]);
+            return redirect()->route('user.home', [auth()->id()]);
         } else {
             return back()->withErrors($bag->add('authFailed', 'Authentication failed, please try again.'));
         }

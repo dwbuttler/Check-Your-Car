@@ -28,12 +28,11 @@ Route::post('user/create', [RegisterController::class, 'register'])->name('user.
 
 Route::middleware([Authenticate::class])->group(function () {
     // Home
-    Route::get('home/{user}', function (User $user) { return view('home', ['user' => $user]); })->name('user.home');
-
+    Route::get('home/{id}', function ($id) { return view('home', ['user' => User::find($id)]); })->name('user.home');
     // Vehicle
     Route::get('vehicle/register', function () { return view('vehicle-register'); })->name('vehicle.register');
     Route::post('vehicle/create', [VehicleController::class, 'register'])->name('vehicle.create');
-    Route::get('vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehicle.edit');
-    Route::post('vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehicle.edit.submit');
-    Route::post('vehicle/delete/{id}', [VehicleController::class, 'delete'])->name('vehicle.delete');
+    Route::get('vehicle/edit/{id}', [VehicleController::class, 'edit']);
+    Route::put('vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehicle.edit');
+    Route::delete('vehicle/delete/{id}', [VehicleController::class, 'delete']);
 });

@@ -31,7 +31,7 @@ class RegisterController extends Controller
                 $user->created_at = now();
                 $user->save();
 
-                return redirect()->route('user.home', [$user]);
+                return redirect('/');
             } else {
                 $bag->add('emailExists', 'An account with email provided already exists');
 
