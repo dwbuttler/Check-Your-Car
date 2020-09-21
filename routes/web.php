@@ -33,4 +33,7 @@ Route::middleware([Authenticate::class])->group(function () {
     // Vehicle
     Route::get('vehicle/register', function () { return view('vehicle-register'); })->name('vehicle.register');
     Route::post('vehicle/create', [VehicleController::class, 'register'])->name('vehicle.create');
+    Route::get('vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehicle.edit');
+    Route::post('vehicle/edit/{id}', [VehicleController::class, 'edit'])->name('vehicle.edit.submit');
+    Route::post('vehicle/delete/{id}', [VehicleController::class, 'delete'])->name('vehicle.delete');
 });

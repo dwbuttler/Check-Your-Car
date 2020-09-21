@@ -1,9 +1,12 @@
+<?php use Illuminate\Support\Facades\URL; ?>
 @extends('app')
 
 @section('title') Welcome @endsection
 
 @section('content')
     <h2>{{ $user->name }}'s Dashboard</h2>
+
+    <p>Registered Vehicles</p>
 
     <!-- If the user has any cars, display a table of them -->
     @forelse ($user->vehicles as $vehicle)
@@ -16,6 +19,7 @@
                     <th scope="col">Model</th>
                     <th scope="col">Year</th>
                     <th scope="col">Type</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,6 +31,10 @@
             <td>{{ $vehicle->model }}</td>
             <td>{{ $vehicle->year }}</td>
             <td>{{ $vehicle->type }}</td>
+            <td>
+                <a href="vehicle/edit/{{ $vehicle->id }}" class="btn btn-primary">Edit</a>
+                <a href="vehicle/delete/{{ $vehicle->id }}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
 
         @if ($loop->last)
@@ -35,7 +43,7 @@
         @endif
     @empty
         <div class="alert alert-primary" role="alert">
-            You currently have no registered vehicles.
+            Registered vehicle details will appear here.
         </div>
     @endforelse
 
