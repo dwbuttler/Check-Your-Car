@@ -11,15 +11,15 @@ class DefectNotificationAction extends Controller
 {
     public function execute(Defect $defect): void
     {
-        $usersWithDefectedVehicles = Vehicle::where([
+        $defectiveVehicles = Vehicle::where([
             'make'  => $defect->make,
             'model' => $defect->model,
             'year'  => $defect->year
-        ])->user();
+        ])->get();
 
-        $usersWithDefectedVehicles->each(function ($user) use ($defect) {
-            Mail::to($user)->send(
-                new DefectReported($user->vehicle, $defect, $user)
+        $defectiveVehicles->each(function ($vehicle) use ($defect) {
+            Mail::to($vehicle->user)->send(
+                new DefectReported($vehicle, $defect, $vehicle->user)
             );
         });
     }
