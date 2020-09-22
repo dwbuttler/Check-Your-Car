@@ -47,7 +47,7 @@ class VehicleController extends Controller
         return redirect()->route('user.home', [auth()->id()]);
     }
 
-    public function delete(Request $request, $id) {
+    public function delete($id) {
         Vehicle::find($id)->delete();
 
         return response('Vehicle deleted', 200);

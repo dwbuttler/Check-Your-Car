@@ -32,6 +32,7 @@
             <td>{{ $vehicle->year }}</td>
             <td>{{ $vehicle->type }}</td>
             <td>
+                <button type='button' class='btn btn-info' data-toggle='modal' data-target='#defectSearchModal' data-vehicle='{{ $vehicle->id }}'>Search for defects</button>
                 <a href='/vehicle/edit/{{ $vehicle->id }}' class='btn btn-secondary'>Edit</a>
                 <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteVehicleModal' data-vehicle='{{ $vehicle->id }}' data-vehicle-name='{{ $vehicle->make }} {{ $vehicle->model }}'>Delete</button>
             </td>
@@ -53,12 +54,28 @@
 
     @csrf
 
-    <!-- Bootstrap modal -->
+    <!-- Vehicle modal -->
     <div class='modal fade' id='deleteVehicleModal' tabindex='-1' aria-labelledby='deleteVehicleModalLabel' aria-hidden='true'>
         <div class='modal-dialog'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <h5 class='modal-title' id='deleteVehicleModalLabel'>Vehicle Deletion</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'></div>
+                <div class='modal-footer'></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Defect modal -->
+    <div class='modal fade' id='defectSearchModal' tabindex='-1' aria-labelledby='defectSearchModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='defectSearchModalLabel'>Defect Search</h5>
                     <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
                         <span aria-hidden='true'>&times;</span>
                     </button>
@@ -82,6 +99,40 @@
 
             modal.find('.modal-body').html('Are you sure you want to delete the <strong>' + vehicleDisplayName + '</strong> from your registered vehicles list?')
             modal.find('.modal-footer').html("<button class='btn btn-secondary' data-dismiss='modal'>Close</button><button class='btn btn-danger' onclick='deleteVehicle()'/>Delete</button>")
+        })
+
+        defectModal = $('#defectSearchModal')
+
+        defectModal.on('show.bs.modal', function (event) {
+            let button              = $(event.relatedTarget)
+            let vehicleID           = button.data('vehicle')
+            let modal               = $(this)
+            let defectSearchRoute      = '/defect/search/' + vehicleID
+
+            $.ajax({
+                url: defectSearchRoute,
+                type: 'GET',
+                success: function (result) {
+                    if (result.length > 0) {
+                        modalBody = modal.find('.modal-body')
+                        modalBody.html("<div class='alert alert-danger' role='alert'>Defects Found!</div><ul>")
+                        result.forEach(function (description) {
+                            modalBody.html(modalBody.html() + '<li><strong>' + description + '</strong></li>')
+                        })
+                        modalBody.html(modalBody.html() + '</ul><br>Please contact the local car manufacturer for your vehicle to get this remedied.')
+                    } else {
+                        modal.find('.modal-body').html("<div class='alert alert-primary' role='alert'>No Defects Found!</div><ul>")
+                    }
+
+                    modal.find('.modal-footer').html("<button class='btn btn-secondary' data-dismiss='modal'>Close</button>")
+                }
+            })
+        })
+
+        defectModal.on('hide.bs.modal', function () {
+            // Reset results from previous search.
+            $(this).find('.modal-body').html('')
+            $(this).find('.modal-footer').html('')
         })
 
         function deleteVehicle() {
