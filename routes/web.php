@@ -1,9 +1,11 @@
 <?php
 
+use App\Defect;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\Authenticate;
+use App\Mail\DefectReported;
 use App\User;
 use App\Vehicle;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +38,13 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('vehicle/edit/{id}', function ($id) { return view('vehicle-edit', ['vehicle' => Vehicle::find($id)]); });
     Route::put('vehicle/edit', [VehicleController::class, 'edit'])->name('vehicle.edit');
     Route::delete('vehicle/delete/{id}', [VehicleController::class, 'delete']);
+});
+
+// Debug defect mail template
+Route::get('mailable', function() {
+    $defect     = Defect::first();
+    $vehicle    = Vehicle::first();
+    $user       = User::first();
+
+    return new DefectReported($vehicle, $defect, $user);
 });

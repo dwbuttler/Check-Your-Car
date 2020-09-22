@@ -50,7 +50,7 @@ class CreateDefectEvent extends Command
 
         $defect->save();
 
-        (new DefectNotificationAction())->execute();
+        (new DefectNotificationAction())->execute($defect);
 
         return 1;
     }

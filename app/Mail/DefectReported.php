@@ -3,9 +3,9 @@
 namespace App\Mail;
 
 use App\Defect;
+use App\User;
 use App\Vehicle;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -17,16 +17,20 @@ class DefectReported extends Mailable
 
     public $defect;
 
+    public $user;
+
     /**
      * Create a new message instance.
      *
      * @param Vehicle $vehicle
      * @param Defect $defect
+     * @param User $user
      */
-    public function __construct(Vehicle $vehicle, Defect $defect)
+    public function __construct(Vehicle $vehicle, Defect $defect, User $user)
     {
         $this->vehicle = $vehicle;
         $this->defect = $defect;
+        $this->user = $user;
     }
 
     /**
@@ -38,6 +42,6 @@ class DefectReported extends Mailable
     {
         return $this
             ->from('alerts@checkyourcar.com.au')
-            ->text('emails.defects.alert');
+            ->view('emails.defects.alert');
     }
 }
